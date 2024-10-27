@@ -31,7 +31,7 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 ## Modelo de Datos
 El modelo de datos se basa en una estructura de colecciones en MongoDB, donde cada colección representa una entidad del sistema. Las principales colecciones son:
 
-### Colecciones
+### Tablas
 
 1. **Usuarios**
    - Representa a todos los usuarios registrados en el sistema.
