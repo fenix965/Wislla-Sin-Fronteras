@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Registro de Clientes</title>
+    <link rel="stylesheet" href="css/formulariostyles.css">
+    <script src="https://kit.fontawesome.com/22b0eb3ac8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Wislla Sin Fronteras</h1>
+        <h1>Restaurante</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="formulario.html" target="_blank">Registro</a></li>
+                <li><a href="promociones.html" target="_blank">Promociones</a></li>
+                <li><a href="informacion.html" target="_blank">Sobre Nosotros</a></li>
+                <a href=""><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></a>
+            </ul>
+        </nav>
+    </header>
+    <h1 class="registration-title">¡Regístrate con Nosotros!</h1>
+    <div class="form-container">
+        <form action="#" method="post" class="registration-form">
+            <div class="section">
+                <h2>Datos personales</h2>
+                <input type="text" placeholder="Nombre" class="input-field" required id="bNombre" oninput="validarLetras(this)">
+                <input type="text" placeholder="Apellido" class="input-field" required id="bApellido" oninput="validarLetras(this)">
+                <input type="email" placeholder="Correo electrónico" class="input-field" required id="bCorreo">
+                <input type="password" placeholder="Contraseña" class="input-field" required id="bContraseña">
+            </div>
+            <div class="section">
+                <h2>Dirección</h2>
+                <input type="text" placeholder="Calle" class="input-field" required id="bCalle">
+                <input type="text" placeholder="Ciudad" class="input-field" required id="bCiudad" oninput="validarLetras(this)">
+                <input type="text" placeholder="Código postal" class="input-field" required id="bPosta" oninput="validarNumero(this)">
+            </div>
+            <div class="section">
+                <h2>Datos de contacto</h2>
+                <input type="tel" placeholder="Teléfono" class="input-field" required id="bTelefono" oninput="validarNumero(this)">
+                <input type="text" placeholder="Red social" class="input-field" required id="bRed" oninput="validarLetras(this)">
+                <input type="text" placeholder="Otro nombre de contacto" class="input-field" required id="bContactoNombre" oninput="validarLetras(this)">
+                <input type="text" placeholder="Otro teléfono de contacto" class="input-field" required id="bContactoTelefono" oninput="validarNumero(this)">
+            </div>
+            <input type="submit" value="Registrarse" class="submit-btn" onclick="Guardar()">
+        </form>
+    </div><br><br>
+    <footer class="footer-custom">
+        <!-- Sección de información de contacto y enlaces a redes sociales -->
+        <div class="contact-info">
+            <p>Dirección: Calle Principal, 123</p>
+            <p>Teléfono: 123-456-789</p>
+            <p>Email: info@tiendaejemplo.com</p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.pinterest.es/"><i class="fa-brands fa-pinterest" style="color: #ffffff;"></i></a>
+            <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook" style="color: #ffffff;"></i></a>
+            <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube" style="color: #ffffff;"></i></a>
+            <a href="https://maps.google.com/"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i></a>
+			<a href="https://www.instagram.com/"><i class="fa-brands fa-instagram" style="color: #ffffff;"></i></a>
+            <a href="https://www.whatsapp.com/?lang=es_LA"><i class="fa-brands fa-whatsapp" style="color: #ffffff;"></i></a>
+            <a href="https://web.telegram.org/"><i class="fa-brands fa-telegram" style="color: #ffffff;"></i></a>
+			<a href="https://twitter.com/?lang=es"><i class="fa-brands fa-x-twitter" style="color: #ffffff;"></i></i></a>
+			<a href="https://www.snapchat.com/"><i class="fa-brands fa-snapchat" style="color: #ffffff;"></i></a>
+        </div>
+    </footer>
+    <script>
+        function validarLetras(input) {
+        // Expresión regular para permitir solo letras (mayúsculas y minúsculas) y espacios
+        var regex = /^[a-zA-Z\s]+$/;
+
+        // Validar el valor del campo con la expresión regular
+        if (!regex.test(input.value)) {
+            // Si no cumple con la expresión regular, eliminar los caracteres no permitidos
+            input.value = input.value.replace(/[^a-zA-Z\s]+/, '');
+        }
+    }
+        function validarNumero(input) {
+        input.value = input.value.replace(/\D/g, '');
+        }
+
+        class Cliente {
+            constructor(nombre, apellido, correo, contraseña, direccion, telefono, redsocial, nombrecontacto,
+                telcontacto) {
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.correo = correo;
+                this.contraseña = contraseña;
+                this.direccion = direccion;
+                this.nombrecontacto = nombrecontacto;
+                this.redsocial = redsocial;
+                this.telcontacto = telcontacto;
+                this.telefono = telefono;
+            }
+        }
+
+        var array = [];
+
+        function Guardar() {
+            var nombre = document.getElementById("bNombre").value;
+            var apellido = document.getElementById("bApellido").value;
+            var correo = document.getElementById("bCorreo").value;
+            var contraseña = document.getElementById("bContraseña").value;
+            var direccion = document.getElementById("bCalle").value + " , " + document.getElementById("bCiudad").value;
+            var telefono = document.getElementById("bTelefono").value;
+            var redsocial = document.getElementById("bRed").value;
+            var nombrecontacto = document.getElementById("bContactoNombre").value;
+            var telcontacto = document.getElementById("bContactoTelefono").value;
+
+            var nuevoCliente = new Cliente(nombre, apellido, correo, contraseña, direccion, telefono, redsocial,
+                nombrecontacto, telcontacto);
+            array.push(nuevoCliente);
+
+            MostrarLista();
+        }
+
+        function MostrarLista() {
+            var miDiv = document.getElementById("divMostrar");
+            miDiv.innerHTML = "";
+            for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+                miDiv.innerHTML += `<ul class="customer-data-container">
+                    <li class="edit-delete-buttons">
+                        <img src="imagenes/edit.png" onclick='Editar(${index})' alt="Editar" class="edit-btn">
+                        <img src="imagenes/eliminar.png" onclick='Eliminar(${index})' alt="Eliminar" class="delete-btn">
+                    </li>
+                    <li class="data-container">
+                        <p><strong>Nombre:</strong> ${element.nombre}</p>
+                        <p><strong>Apellido:</strong> ${element.apellido}</p>
+                        <p><strong>Correo:</strong> ${element.correo}</p>
+                        <p><strong>Dirección:</strong> ${element.direccion}</p>
+                        <p><strong>Teléfono:</strong> ${element.telefono}</p>
+                        <p><strong>Red Social:</strong> ${element.redsocial}</p>
+                        <p><strong>Nombre Contacto:</strong> ${element.nombrecontacto}</p>
+                        <p><strong>Teléfono Contacto:</strong> ${element.telcontacto}</p>
+                    </li>
+                </ul>`;
+            }
+        }
+
+    </script>
+</body>
+</html>

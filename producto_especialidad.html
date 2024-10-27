@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comida nacional</title>
+    <link rel="stylesheet" href="css/stylesproductos.css">
+    <script src="https://kit.fontawesome.com/22b0eb3ac8.js" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    <header>
+        <h1>Wislla Sin Fronteras</h1>
+        <h1>Restaurante</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="formulario.html" target="_blank">Registro</a></li>
+                <li><a href="promociones.html" target="_blank">Promociones</a></li>
+                <li><a href="" target="_blank">Sobre Nosotros</a></li>
+                <a href=""><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i></a>
+            </ul>
+        </nav>
+    </header>
+    <h1 class="registration-title">¡Nuestros Productos!</h1>
+    <main>
+        <section class="products">
+
+            <a href="carrito.html">
+            <div class="product" onclick="Prod02()">
+                <img class="imagen-transparente" src="imagenes/Carrito.png" alt="Imagen con transparencia">
+                <img src="imagenes/pique_macho.jpg" alt="Producto 1">
+                <div class="product-description">
+                    <h2>Pique Macho</h2>
+                    <p>El Pique Macho es un plato típico de Bolivia que combina carne de res, salchichas, papas fritas y huevo. Todo se mezcla con cebolla, pimientos y especias, creando una explosión de sabores. Se sirve caliente, a menudo acompañado de una salsa picante y es ideal para compartir en reuniones familiares o con amigos.</p>
+                </div>
+                <span>Precio: $28.00</span>
+            </div>
+            </a>
+            <a href="carrito.html">
+            <div class="product" onclick="Prod03()">
+                <img class="imagen-transparente" src="imagenes/Carrito.png" alt="Imagen con transparencia">
+                <img src="imagenes/imagen_silpancho.jpg" alt="Producto 1">
+                <div class="product-description">
+                    <h2>Silpancho</h2>
+                    <p>El Silpancho es un delicioso plato originario de Cochabamba, que consiste en una base de arroz y papas, cubierto con una milanesa de carne de res. Se acompaña con ensalada fresca y huevo frito. Su combinación de texturas y sabores lo convierte en una opción muy popular en la gastronomía boliviana.</p>
+                </div>
+                <span>Precio: $28.00</span>
+            </div>
+            </a>
+            <a href="carrito.html">
+                <div class="product" onclick="Prod04()">
+                    <img class="imagen-transparente" src="imagenes/Carrito.png" alt="Imagen con transparencia">
+                    <img src="imagenes/plato_pacenio.jpg" alt="Producto 1">
+                    <div class="product-description">
+                        <h2>Plato Paceño</h2>
+                        <p>El Plato Paceño es una celebración de los ingredientes frescos y autóctonos del altiplano boliviano. Se compone de choclo (maíz), habas, papas cocidas y queso frito, generalmente acompañado de una salsa llajwa (una salsa de ají y tomate). Este plato es una delicia sencilla pero deliciosa, caracterizada por sus sabores naturales y la frescura de sus ingredientes.</p>
+                    </div>
+                    <span>Precio: $28.00</span>
+                </div>
+                </a>
+                <a href="carrito.html">
+                    <div class="product" onclick="Prod05()">
+                        <img class="imagen-transparente" src="imagenes/Carrito.png" alt="Imagen con transparencia">
+                        <img src="imagenes/majadito.jpg" alt="Producto 1">
+                        <div class="product-description">
+                            <h2>Majadito</h2>
+                            <p>El Majadito es un plato típico de la región oriental de Bolivia, especialmente de Santa Cruz. Consiste en arroz cocido con charque (carne seca y desmenuzada) o pollo, acompañado de plátano frito, huevo frito y yuca cocida. Es una comida reconfortante, con el sabor ahumado del charque o el pollo mezclándose con la textura del arroz.</p>
+                        </div>
+                        <span>Precio: $28.00</span>
+                    </div>
+                    </a>
+            <!-- Repetir el mismo patrón para los demás productos -->
+
+        </section>
+    </main>
+
+    <footer class="footer-custom">
+        <!-- Sección de información de contacto y enlaces a redes sociales -->
+        <div class="contact-info">
+            <p>Dirección: Calle Principal, 123</p>
+            <p>Teléfono: 123-456-789</p>
+            <p>Email: info@tiendaejemplo.com</p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.pinterest.es/"><i class="fa-brands fa-pinterest" style="color: #ffffff;"></i></a>
+            <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook" style="color: #ffffff;"></i></a>
+            <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube" style="color: #ffffff;"></i></a>
+            <a href="https://maps.google.com/"><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i></a>
+			<a href="https://www.instagram.com/"><i class="fa-brands fa-instagram" style="color: #ffffff;"></i></a>
+            <a href="https://www.whatsapp.com/?lang=es_LA"><i class="fa-brands fa-whatsapp" style="color: #ffffff;"></i></a>
+            <a href="https://web.telegram.org/"><i class="fa-brands fa-telegram" style="color: #ffffff;"></i></a>
+			<a href="https://twitter.com/?lang=es"><i class="fa-brands fa-x-twitter" style="color: #ffffff;"></i></i></a>
+			<a href="https://www.snapchat.com/"><i class="fa-brands fa-snapchat" style="color: #ffffff;"></i></a>
+        </div>
+    </footer>
+    <script>
+        class Producto
+        {
+            constructor(imagen,nombre,descripcion,precio)
+            {
+                this.imagen =imagen;
+                this.nombre = nombre;
+                this.descripcion = descripcion;
+                this.precio = precio;
+            }
+        }
+        var array =[];
+        var est01 = new Producto ("imagenes/imagen cafe.jpg","Cafe Especial","Utilizamos un producto nacional poco explotado pero de alta categoría y reconocimiento internacional, el cual es el café arábico yungueño, sembrado a aproximadamente 1600 mts sobre el nivel del mar.","21.00");
+        var est02 = new Producto ("imagenes/espresso.jpg","Espresso Iluminado","Sumérgete en la rica oscuridad de nuestro Espresso Iluminado. Esta audaz creación fusiona la intensidad del café espresso con destellos de notas de cacao y un toque de avellanas tostadas. Una experiencia que despierta tus sentidos y te transporta a un mundo de pura indulgencia.","28.00");
+        var est03 = new Producto ("imagenes/cappuccino.jpg","Cappuccino Cielo Estrellado","Un cappuccino que es más que una bebida, es una obra maestra celestial. La suavidad de la leche vaporizada se encuentra con la intensidad del espresso en una danza armoniosa. Coronado con una nube de espuma, cada sorbo es como saborear el cielo estrellado en una taza.","28.00");
+        var est04 = new Producto ("imagenes/imagen late.jpg","Latte de Especias Encantadas","Deja que la magia del café te envuelva con nuestro Latte de Especias Encantadas. Una mezcla única de espresso sedoso y leche vaporizada, sazonada con canela, cardamomo y un toque de nuez moscada. Este brebaje encantador te lleva a un viaje de sabores exóticos que despiertan tus sentidos.","28.00");
+        var est05 = new Producto ("imagenes/imagen mocha.jpg","Mocha Suave Sinfonía","Sumérgete en la armonía del chocolate y el café con nuestra Mocha Suave Sinfonía. Un equilibrio perfecto entre el espresso intenso y la indulgencia del chocolate suave. Rematado con una crema aterciopelada, cada sorbo es como una sinfonía de placer en tu paladar.","28.00");
+        
+        array.push(est01);
+        array.push(est02);
+        array.push(est03);
+        array.push(est04);
+        array.push(est05);
+     
+        var i=-1;
+        function Prod01()
+        {
+            localStorage.setItem('array', JSON.stringify(array));
+            localStorage.setItem('i','0');
+        }
+        function Prod02()
+        {
+            localStorage.setItem('array', JSON.stringify(array));
+            localStorage.setItem('i','1');
+        }
+        function Prod03()
+        {
+            localStorage.setItem('array', JSON.stringify(array));
+            localStorage.setItem('i','2');
+        }
+        function Prod04()
+        {
+            localStorage.setItem('array', JSON.stringify(array));
+            localStorage.setItem('i','3');
+        }
+        function Prod05()
+        {
+            localStorage.setItem('array', JSON.stringify(array));
+            localStorage.setItem('i','4');
+        }
+    
+    </script>
+</body>
+</html>
