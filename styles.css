@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f0eb; /* Color crema suave */
+}
+
+header {
+    background-color: #4a3d35; /* Marrón oscuro */
+    color: #e2b585; /* Color crema suave para el texto del header */
+    padding: 20px;
+    display: flex;
+    align-items: center; /* Alinear verticalmente */
+    justify-content: space-between; /* Espacio entre el logo y el título */
+}
+
+header img {
+    width: 190px; /* Tamaño más grande del logo */
+    height: auto;
+}
+
+header .title-container {
+    text-align: center; /* Centrar el texto del título */
+    flex-grow: 1; /* Para que ocupe el espacio restante */
+    margin-left: -100px; /* Mover el título un poco a la izquierda */
+}
+
+h1 {
+    margin: 5px 0; /* Espacio más pequeño entre títulos */
+    font-family: 'Georgia', sans-serif;
+    font-size: 36px; /* Tamaño del título más grande */
+    color: #d8a76c; /* Color dorado suave para el título */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+.registration-title {
+    text-align: center;
+    font-size: 28px; /* Tamaño más pequeño para la inscripción */
+    color: #8d7b6d; /* Marrón claro */
+    margin-top: 15px; /* Espacio ajustado */
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+a {
+    text-decoration: none;
+}
+
+.product h2::first-letter {
+    font-size: 150%;
+    color: #7e5b4a; /* Marrón oscuro */
+    font-weight: bold;
+    margin-right: 5px;
+    letter-spacing: -1px; /* Ajuste del espaciado */
+}
+
+nav {
+    margin-top: 10px; /* Espacio entre el título y la navegación */
+    text-align: center; /* Centrar navegación */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Sin margen para una mejor alineación */
+    display: inline-block; /* Para centrar la lista */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px; /* Espacio entre los enlaces */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #d8a76c; /* Color dorado suave para los enlaces */
+    font-weight: bold; /* Para resaltar los enlaces */
+    transition: color 0.3s; /* Transición suave para el color */
+}
+
+nav ul li a:hover {
+    color: #ffbc76; /* Color amarillo al pasar el mouse */
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    width: 250px;
+    padding: 20px;
+    border: 2px solid #a56b55; /* Bordes en marrón suave */
+    border-radius: 8px;
+    background-color: #f0e3db; /* Fondo suave para productos */
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #4a3d35; /* Texto marrón oscuro */
+}
+
+.product img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: #d3c5b3; /* Fondo suave al hacer hover */
+    border-color: #d8a76c; /* Bordes en color dorado suave */
+    color: #4a3d35; /* Texto marrón oscuro para mayor contraste */
+}
+
+/* Estilos para el pie de página */
+.footer-custom {
+    background-color: #4a3d35; /* Marrón oscuro */
+    color: #e2b585; /* Color crema suave */
+    text-align: center;
+    padding: 20px 0;
+}
+
+.contact-info, .social-links {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #e2b585; /* Color crema suave */
+    padding: 5px;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}

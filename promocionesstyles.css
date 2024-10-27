@@ -1,0 +1,168 @@
+/* Estilos para el cuerpo de la página */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f0eb; /* Color crema suave */
+}
+
+/* Estilos para el encabezado */
+header {
+    background-color: #4a3d35; /* Marrón oscuro */
+    color: #e2b585; /* Color crema suave para el texto en el encabezado */
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Georgia', sans-serif;
+    text-decoration: none; /* Eliminación del subrayado */
+    color: #d8a76c; /* Color dorado suave para el título */
+}
+
+/* Estilos para el título de registro */
+.registration-title {
+    text-align: center;
+    font-size: 36px;
+    color: #8d7b6d; /* Marrón claro */
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilos para la navegación */
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px; /* Espacio entre los enlaces */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #d8a76c; /* Color dorado suave para los enlaces */
+    font-weight: bold;
+    transition: color 0.3s; /* Transición suave para el color */
+}
+
+nav ul li a:hover {
+    color: #ffbc76; /* Color amarillo al pasar el mouse */
+}
+
+/* Estilos para el título de promociones */
+.promotions-title {
+    text-align: center;
+    font-size: 48px;
+    color: #d8a76c; /* Color dorado suave para el título de promociones */
+    margin-top: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada para el título */
+}
+
+/* Estilos para el contenedor de productos */
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrado de los productos */
+    gap: 30px; /* Espacio entre los productos */
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilos para los productos */
+.product {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #a56b55; /* Bordes en marrón suave */
+    border-radius: 8px; /* Esquinas redondeadas */
+    background-color: #f0e3db; /* Fondo suave para productos */
+    text-align: center;
+    margin: 10px;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.product img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 10px; /* Esquinas redondeadas para imágenes */
+}
+
+.product h2::first-letter {
+    font-size: 150%;
+    color: #7e5b4a; /* Marrón oscuro */
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Estilos para productos en promoción */
+.product.on-sale {
+    background-color: #ffeb3b; /* Fondo amarillo claro para los productos en promoción */
+    border-color: #d8a76c; /* Bordes en color dorado suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+    color: #4a3d35; /* Color del texto */
+    padding: 25px; /* Aumento del espacio interior */
+}
+
+/* Estilos al pasar el cursor sobre productos en promoción */
+.product.on-sale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #ffe57f; /* Color de fondo al pasar el cursor (amarillo más claro) */
+    border-color: #4a3d35; /* Color del borde al pasar el cursor */
+    animation: pulse 0.5s infinite alternate; /* Animación al pasar el cursor */
+}
+
+/* Estilos para el pie de página */
+.footer-custom {
+    background-color: #4a3d35; /* Marrón oscuro */
+    color: #e2b585; /* Color crema suave */
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px; /* Espacio superior del pie de página */
+}
+
+.contact-info, .social-links {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+/* Estilos para enlaces sociales */
+.social-links a {
+    text-decoration: none;
+    color: #e2b585; /* Color crema suave */
+    padding: 5px;
+    transition: color 0.3s; /* Transición suave para el color */
+}
+
+.social-links a:hover {
+    color: #ffbc76; /* Color amarillo al pasar el cursor sobre enlaces sociales */
+}
+
+/* Estilos para la imagen transparente */
+.imagen-transparente {
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    width: 50%;
+    height: 50%;
+    opacity: 0; /* La imagen estará invisible inicialmente */
+    transition: opacity 0.3s ease;
+}
+
+/* Efecto al pasar el cursor sobre el producto */
+.product:hover .imagen-transparente {
+    opacity: 0.2; /* Efecto al pasar el cursor sobre el producto */
+}
+
+/* Estilos generales para enlaces */
+a {
+    text-decoration: none; /* Eliminación del subrayado para los enlaces */
+}
