@@ -1,4 +1,4 @@
-# Sistema de Gestión para el Restaurante "La Wislla"
+# Sistema de Gestión para el Restaurante "Wislla Sin Fronteras"
 
 Este proyecto es un sistema de gestión para un restaurante que permite controlar reservas, pedidos, mesas, inventarios, proveedores, clientes, empleados y platillos. El sistema busca optimizar la operatividad del restaurante, mejorar la organización y facilitar el acceso a información importante en tiempo real.
 
