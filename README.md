@@ -6,8 +6,8 @@ Este proyecto es un sistema de gestión para un restaurante que permite controla
 - [Objetivo](#objetivo)
 - [Descripción del Sistema](#descripción-del-sistema)
 - [Modelo de Datos](#modelo-de-datos)
-  - [Colecciones](#colecciones)
-  - [Relaciones entre Colecciones](#relaciones-entre-colecciones)
+  - [Tablas](#tablas)
+  - [Relaciones entre Tablas](#relaciones-entre-tablas)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
 - [Instrucciones de Instalación](#instrucciones-de-instalación)
@@ -29,14 +29,14 @@ El sistema está diseñado para ser intuitivo y accesible para los empleados del
 Este sistema permite optimizar las operaciones diarias y mejorar el flujo de trabajo dentro del restaurante.
 
 ## Modelo de Datos
-El modelo de datos se basa en una estructura de colecciones en MongoDB, donde cada colección representa una entidad del sistema. Las principales colecciones son:
+El modelo de datos se basa en una estructura de tablas en una base de datos relacional. Las principales tablas son:
 
 ### Tablas
 
 1. **Usuarios**
    - Representa a todos los usuarios registrados en el sistema.
    - Atributos:
-     - `_id`: Identificador único del usuario.
+     - `id`: Identificador único del usuario.
      - `nombre_usuario`: Nombre del usuario.
      - `contraseña`: Contraseña del usuario.
      - `rol`: Rol del usuario (cliente, administrador, cocinero, mesero).
@@ -44,21 +44,21 @@ El modelo de datos se basa en una estructura de colecciones en MongoDB, donde ca
 2. **Clientes**
    - Almacena la información de los clientes.
    - Atributos:
-     - `_id`: Identificador único del cliente.
+     - `id`: Identificador único del cliente.
      - `usuario_id`: Identificador del usuario asociado.
      - `nombre`, `apellidos`, `telefono`, `email`, `direccion`: Información del cliente.
 
 3. **Empleados**
    - Contiene los datos de los empleados.
    - Atributos:
-     - `_id`: Identificador único del empleado.
+     - `id`: Identificador único del empleado.
      - `usuario_id`: Identificador del usuario asociado.
      - `nombre`, `apellidos`, `puesto`, `salario`, `telefono`, `email`: Información del empleado y su posición en el restaurante.
 
 4. **Mesas**
    - Representa las mesas del restaurante.
    - Atributos:
-     - `_id`: Identificador único de la mesa.
+     - `id`: Identificador único de la mesa.
      - `numero`: Número de la mesa.
      - `capacidad`: Capacidad de personas.
      - `estado`: Estado de disponibilidad de la mesa.
@@ -67,27 +67,27 @@ El modelo de datos se basa en una estructura de colecciones en MongoDB, donde ca
 5. **Reservas**
    - Almacena las reservas realizadas por los clientes.
    - Atributos:
-     - `_id`: Identificador único de la reserva.
+     - `id`: Identificador único de la reserva.
      - `cliente_id`, `mesa_id`: Referencias a cliente y mesa.
      - `fecha`, `hora`, `numero_personas`: Información sobre la reserva.
 
 6. **Pedidos**
    - Contiene los pedidos realizados por los clientes.
    - Atributos:
-     - `_id`: Identificador único del pedido.
+     - `id`: Identificador único del pedido.
      - `cliente_id`, `mesa_id`, `empleado_id`: Referencias a cliente, mesa y empleado.
      - `fecha`, `estado`, `total`: Detalles del pedido.
 
 7. **Productos**
    - Almacena los productos que el restaurante ofrece o utiliza.
    - Atributos:
-     - `_id`: Identificador único del producto.
+     - `id`: Identificador único del producto.
      - `nombre`, `precio`, `categoria`: Información sobre el producto.
 
 8. **Inventario**
    - Controla las existencias de productos en el restaurante.
    - Atributos:
-     - `_id`: Identificador único del registro.
+     - `id`: Identificador único del registro.
      - `producto_id`: Referencia al producto.
      - `cantidad`: Cantidad disponible.
      - `fechaIngreso`: Fecha de ingreso del producto al inventario.
@@ -95,34 +95,34 @@ El modelo de datos se basa en una estructura de colecciones en MongoDB, donde ca
 9. **Proveedores**
    - Representa a los proveedores de productos o ingredientes.
    - Atributos:
-     - `_id`: Identificador único del proveedor.
+     - `id`: Identificador único del proveedor.
      - `nombre`, `contacto`, `telefono`, `email`, `direccion`: Información del proveedor.
 
 10. **Ingredientes**
     - Almacena los ingredientes usados en los platillos.
     - Atributos:
-      - `_id`: Identificador único del ingrediente.
+      - `id`: Identificador único del ingrediente.
       - `nombre`, `cantidadDisponible`, `unidadMedida`, `precioUnitario`: Información del ingrediente.
 
 11. **Platillos**
     - Contiene los platillos disponibles en el menú.
     - Atributos:
-      - `_id`: Identificador único del platillo.
+      - `id`: Identificador único del platillo.
       - `nombre`, `precio`, `descripcion`, `ingredientes[]`: Información y composición del platillo.
 
 12. **Orden**
     - Detalla cada orden realizada en un pedido.
     - Atributos:
-      - `_id`: Identificador único de la orden.
+      - `id`: Identificador único de la orden.
       - `pedido_id`, `platillo_id`, `cantidad`: Información de la orden.
 
 13. **Detalle_Orden**
     - Almacena los detalles específicos de cada orden.
     - Atributos:
-      - `_id`: Identificador único del detalle.
+      - `id`: Identificador único del detalle.
       - `orden_id`, `platillo_id`, `subtotal`: Información de cada platillo en la orden.
 
-### Relaciones entre Colecciones
+### Relaciones entre Tablas
 
 - **Usuarios** se relaciona con **Clientes** y **Empleados** (herencia).
 - **Clientes** realiza **Pedidos** y **Reservas**.
@@ -147,6 +147,10 @@ El modelo de datos se basa en una estructura de colecciones en MongoDB, donde ca
 8. **Detalle de Órdenes**: Muestra los detalles de cada platillo en los pedidos.
 
 ## Tecnologías Utilizadas
+- PHP
+- HTML/CSS
+- JavaScript
+- MySQL (u otra base de datos relacional)
 
 ## Instrucciones de Instalación
 
@@ -154,3 +158,10 @@ El modelo de datos se basa en una estructura de colecciones en MongoDB, donde ca
    ```bash
    git clone https://github.com/tu-usuario/sistema-restaurante.git
    cd sistema-restaurante
+2. Configura el servidor local (XAMPP, WAMP, etc.) y crea una base de datos.
+
+3. Importa los archivos SQL para crear las tablas necesarias.
+
+4. Configura las credenciales de la base de datos en los archivos de configuración de tu proyecto.
+
+5. Inicia el servidor y accede a la aplicación desde tu navegador.
