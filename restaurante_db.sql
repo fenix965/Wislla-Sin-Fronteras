@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `restaurante_db`
 --
-
+CREATE DATABASE restaurante_db;
+USE restaurante_db;
 -- --------------------------------------------------------
 
 --
@@ -132,6 +133,9 @@ CREATE TABLE `ingredientes` (
   `precio_unitario` decimal(10,2) NOT NULL CHECK (`precio_unitario` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `ingredientes` ADD COLUMN `activo` TINYINT(1) NOT NULL DEFAULT 1;
+ALTER TABLE `ingredientes` ADD COLUMN `motivo_eliminacion` VARCHAR(100);
+
 --
 -- Volcado de datos para la tabla `ingredientes`
 --
@@ -159,24 +163,27 @@ CREATE TABLE `inventario` (
   `id` bigint(20) NOT NULL,
   `producto_id` bigint(20) DEFAULT NULL,
   `cantidad` int(11) NOT NULL CHECK (`cantidad` >= 0),
-  `fecha_ingreso` date NOT NULL DEFAULT curdate()
+  `fecha_ingreso` date NOT NULL DEFAULT curdate(),
+  `activo` TINYINT(1) NOT NULL DEFAULT 1   -- 1 indica activo; 0 indica inactivo
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Volcado de datos para la tabla `inventario`
 --
 
-INSERT INTO `inventario` (`id`, `producto_id`, `cantidad`, `fecha_ingreso`) VALUES
-(1, 1, 50, '2024-11-01'),
-(2, 2, 100, '2024-11-01'),
-(3, 3, 20, '2024-11-01'),
-(4, 4, 25, '2024-11-01'),
-(5, 5, 30, '2024-11-01'),
-(6, 6, 35, '2024-11-01'),
-(7, 7, 40, '2024-11-01'),
-(8, 8, 15, '2024-11-01'),
-(9, 9, 60, '2024-11-01'),
-(10, 10, 80, '2024-11-01');
+INSERT INTO `inventario` (`id`, `producto_id`, `cantidad`, `fecha_ingreso`, `activo`) VALUES
+(1, 1, 50, '2024-11-01', 1),
+(2, 2, 100, '2024-11-01', 1),
+(3, 3, 20, '2024-11-01', 1),
+(4, 4, 25, '2024-11-01', 1),
+(5, 5, 30, '2024-11-01', 1),
+(6, 6, 35, '2024-11-01', 1),
+(7, 7, 40, '2024-11-01', 1),
+(8, 8, 15, '2024-11-01', 1),
+(9, 9, 60, '2024-11-01', 1),
+(10, 10, 80, '2024-11-01', 1);
+
 
 -- --------------------------------------------------------
 
