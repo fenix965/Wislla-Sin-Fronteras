@@ -43,16 +43,16 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 
 | **Tecnología**  | **Descripción**                                     | **Logo** |
 |------------------|-----------------------------------------------------|----------|
-| PHP             | Lenguaje de programación para el desarrollo backend | ![PHP](https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg) |
-| HTML            | Lenguaje de marcado para la estructura web          | ![HTML](https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg) |
-| CSS             | Lenguaje de diseño para estilizar la página web     | ![CSS](https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg) |
-| GitHub          | Repositorio para control de versiones               | ![GitHub](https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg) |
-| Visual Studio Code | Editor de código fuente                         | ![VSCode](https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg) |
-| Office 365      | Suite de herramientas para gestión y colaboración   | ![Office 365](https://upload.wikimedia.org/wikipedia/commons/f/f4/Microsoft_Office_2013_logo.svg) |
-| Lucidchart      | Herramienta para diseño de diagramas                | ![Lucidchart](https://upload.wikimedia.org/wikipedia/commons/e/e7/Lucidchart_logo.svg) |
-| PlantUML        | Generación de diagramas UML mediante texto          | ![PlantUML](https://upload.wikimedia.org/wikipedia/commons/8/8f/PlantUML-logo.png) |
-| XAMPP           | Servidor local para desarrollo web                  | ![XAMPP](https://upload.wikimedia.org/wikipedia/commons/7/71/XAMPP_logo.svg) |
-| phpMyAdmin      | Herramienta de gestión para bases de datos MySQL    | ![phpMyAdmin](https://upload.wikimedia.org/wikipedia/commons/2/29/PhpMyAdmin_logo.png) |
+| PHP             | Lenguaje de programación para el desarrollo backend | <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="PHP" width="50"> |
+| HTML            | Lenguaje de marcado para la estructura web          | <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML" width="50"> |
+| CSS             | Lenguaje de diseño para estilizar la página web     | <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS" width="50"> |
+| GitHub          | Repositorio para control de versiones               | <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="50"> |
+| Visual Studio Code | Editor de código fuente                         | <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="VSCode" width="50"> |
+| Office 365      | Suite de herramientas para gestión y colaboración   | <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Microsoft_Office_2013_logo.svg" alt="Office 365" width="50"> |
+| Lucidchart      | Herramienta para diseño de diagramas                | <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Lucidchart_logo.svg" alt="Lucidchart" width="50"> |
+| PlantUML        | Generación de diagramas UML mediante texto          | <img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/PlantUML-logo.png" alt="PlantUML" width="50"> |
+| XAMPP           | Servidor local para desarrollo web                  | <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/XAMPP_logo.svg" alt="XAMPP" width="50"> |
+| phpMyAdmin      | Herramienta de gestión para bases de datos MySQL    | <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/PhpMyAdmin_logo.png" alt="phpMyAdmin" width="50"> |
 
 ---
 
