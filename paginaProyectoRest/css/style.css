@@ -77,10 +77,13 @@ h1, h2, h3 {
 }
 
 .menu-card-title {
-    color: #2b1810; /* Marrón oscuro */
-    margin-bottom: 10px;
+    color: #2b1810; 
+    font-weight: bold;
+    margin-bottom: 20px;
 }
-
+.menu-card-body {
+    padding: 15px; /* Añade espacio dentro del contenedor */
+}
 .menu-card-price {
     color: #c17817; /* Naranja tostado */
     font-size: 1.25rem;

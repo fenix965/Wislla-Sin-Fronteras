@@ -76,18 +76,28 @@ $usuarioAutenticado = isset($_SESSION['cliente_id']) || isset($_SESSION['user_id
                     $total += $subtotal;
                 ?>
                     <div class="cart-item">
-                        <img src="<?php echo htmlspecialchars($item['imagen']); ?>" alt="<?php echo htmlspecialchars($item['nombre']); ?>" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3 class="cart-item-title"><?php echo htmlspecialchars($item['nombre']); ?></h3>
-                            <form class="d-flex align-items-center">
-                                <input type="number" class="form-control me-2" value="<?php echo $cantidad; ?>" min="1" onchange="updateQuantity(<?php echo $index; ?>, this.value)">
-                            </form>
-                            <span class="cart-item-price">Bs <?php echo number_format($subtotal, 2); ?></span>
-                        </div>
-                        <button class="remove-btn ms-3" onclick="removeItem(<?php echo $index; ?>)">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+    <img src="<?php echo htmlspecialchars($item['imagen']); ?>" alt="<?php echo htmlspecialchars($item['nombre']); ?>" class="cart-item-image">
+    <div class="cart-item-details">
+        <h3 class="cart-item-title"><?php echo htmlspecialchars($item['nombre']); ?></h3>
+        
+        <!-- Campo de cantidad mejorado -->
+        <div class="quantity-wrapper d-flex align-items-center">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(<?php echo $index; ?>, <?php echo $cantidad - 1; ?>)">
+                <i class="fas fa-minus"></i>
+            </button>
+            <input type="number" class="form-control quantity-input" value="<?php echo $cantidad; ?>" min="1" onchange="updateQuantity(<?php echo $index; ?>, this.value)">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateQuantity(<?php echo $index; ?>, <?php echo $cantidad + 1; ?>)">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <span class="cart-item-price">Bs <?php echo number_format($subtotal, 2); ?></span>
+    </div>
+    <button class="remove-btn ms-3" onclick="removeItem(<?php echo $index; ?>)">
+        <i class="fas fa-trash"></i>
+    </button>
+</div>
+
                 <?php endforeach; ?>
             </div>
             <div class="cart-summary">
@@ -96,14 +106,10 @@ $usuarioAutenticado = isset($_SESSION['cliente_id']) || isset($_SESSION['user_id
                     <span>Subtotal:</span>
                     <span>Bs <?php echo number_format($total, 2); ?></span>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Impuestos (13%):</span>
-                    <span>Bs <?php echo number_format($total * 0.13, 2); ?></span>
-                </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <strong>Total:</strong>
-                    <strong>Bs <?php echo number_format($total * 1.13, 2); ?></strong>
+                    <strong>Bs <?php echo number_format($total, 2); ?></strong>
                 </div>
                 <form action="finalizar_compra.php" method="POST" id="finalizarCompraForm">
                     <button type="submit" class="checkout-btn btn btn-success mt-3" <?php echo !$usuarioAutenticado ? 'disabled' : ''; ?>>Finalizar Compra</button>
@@ -118,59 +124,68 @@ $usuarioAutenticado = isset($_SESSION['cliente_id']) || isset($_SESSION['user_id
         </div>
     </div>
 
-    <!-- Mensaje de éxito -->
     <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 mt-3 me-3" role="alert" style="display: none; z-index: 1050;">
         ¡Gracias por su compra! Su pedido ha sido procesado con éxito.
     </div>
 
     <script>
-        function updateQuantity(index, quantity) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'actualizar_cantidad.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    location.reload();
-                }
-            };
-            xhr.send(`index=${index}&cantidad=${quantity}`);
-        }
+    // Función para actualizar la cantidad de un producto en el carrito
+    function updateQuantity(index, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'actualizar_cantidad.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                location.reload();
+            }
+        };
+        xhr.send(`index=${index}&cantidad=${quantity}`);
+    }
 
-        function removeItem(index) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'remover_producto.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    location.reload();
-                }
-            };
-            xhr.send(`index=${index}`);
-        }
+    // Función para eliminar un producto del carrito
+    function removeItem(index) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'remover_producto.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                location.reload();
+            }
+        };
+        xhr.send(`index=${index}`);
+    }
 
-        // Manejo de finalización de compra
-        const form = document.getElementById('finalizarCompraForm');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
+    // Manejo de finalización de compra
+    const form = document.getElementById('finalizarCompraForm');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevenir el envío tradicional del formulario
 
-            const formData = new FormData(form);
+        const formData = new FormData(form);
 
-            fetch('finalizar_compra.php', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('successMessage').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                        window.location.href = 'menu.php'; // Redirige al menú tras unos segundos
-                    }, 5000);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        fetch('finalizar_compra.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json()) // Espera una respuesta JSON
+        .then(data => {
+            if (data.success) {
+                // Muestra el mensaje de éxito
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                    window.location.href = 'menu.php'; // Redirige al menú después de unos segundos
+                }, 5000);
+            } else {
+                // Muestra el mensaje de error si la compra no fue exitosa
+                alert("Error al procesar la compra: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error); // Muestra un mensaje en caso de error
+            alert("Hubo un error al procesar la compra.");
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>

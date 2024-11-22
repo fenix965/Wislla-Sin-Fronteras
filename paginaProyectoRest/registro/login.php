@@ -32,22 +32,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_reset->bind_param("i", $user_id);
                     $stmt_reset->execute();
                     $stmt_reset->close();
-
+                
                     $_SESSION['user_id'] = $user_id;
                     $_SESSION['nombre'] = $db_nombre;
                     $_SESSION['rol'] = $rol;
-                    
+                
                     if ($rol == 'cliente') {
-                        $_SESSION['cliente_id'] = $user_id; // Ahora el carrito reconocerá a los clientes
+                        $_SESSION['cliente_id'] = $user_id; 
                         header('Location: ../cliente/PaginaInfo.php');
                         exit();
-                    }
-                    
                     } elseif ($rol == 'administrador') {
                         header('Location: ../administrador/admin.php');
                         exit();
                     } else {
-                        header('Location: ../empleado/indexE.php');  
+                        header('Location: ../empleado/indexE.php');
                         exit();
                     }
                 } else {
@@ -57,9 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_update->bind_param("iii", $intentos_fallidos, $current_time, $user_id);
                     $stmt_update->execute();
                     $stmt_update->close();
-
+                
                     $error_message = "Contraseña incorrecta. Te quedan $remaining_attempts intentos.";
                 }
+                
             }
         } else {
             $error_message = "El nombre de usuario no está registrado.";
