@@ -60,7 +60,7 @@ session_start();
         <div class="container text-center">
             <h1 class="display-3 mb-4">Wislla Sin Fronteras</h1>
             <p class="lead mb-4">Una experiencia gastronómica única que fusiona la tradición boliviana con la innovación contemporánea</p>
-            <a href="#reserva" class="btn btn-warning btn-lg">Reserva Ahora</a>
+            <a href="reservas.php" class="btn btn-warning btn-lg">Reserva Ahora</a>
         </div>
     </section>
 

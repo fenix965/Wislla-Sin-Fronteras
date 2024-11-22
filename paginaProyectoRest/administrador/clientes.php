@@ -23,7 +23,7 @@ $sql = "SELECT
         ) ORDER BY r.fecha DESC SEPARATOR ';'
     ) as historial_reservas
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.cliente_id
+LEFT JOIN reservas r ON c.id = r.user_id
 GROUP BY 
     c.id,
     c.usuario_id,
@@ -44,7 +44,7 @@ $sql_stats = "SELECT
     SUM(r.total) as ingresos_totales,
     AVG(r.total) as promedio_reserva
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.cliente_id";
+LEFT JOIN reservas r ON c.id = r.user_id";
 
 $stats_result = mysqli_query($conn, $sql_stats);
 $stats = mysqli_fetch_assoc($stats_result);
@@ -171,6 +171,7 @@ $nombre_admin = $_SESSION['nombre'];
                                     <th>Total Reservas</th>
                                     <th>Última Reserva</th>
                                     <th>Total Gastado</th>
+                                    <th>Reservas</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,13 +182,15 @@ $nombre_admin = $_SESSION['nombre'];
                                     <td><?= htmlspecialchars($row['email']); ?></td>
                                     <td><?= htmlspecialchars($row['telefono']); ?></td>
                                     <td>
-                                        <span class="badge bg-info">
-                                            <?= htmlspecialchars($row['total_reservas']); ?>
-                                        </span>
+                                        <span class="badge bg-info"><?= htmlspecialchars($row['total_reservas']); ?></span>
                                     </td>
                                     <td><?= $row['ultima_reserva'] ? date('d/m/Y', strtotime($row['ultima_reserva'])) : 'Sin reservas'; ?></td>
-                                    <td><?= number_format($row['total_gastado'], 2); ?></td>
-                                    
+                                    <td>Bs. <?= number_format($row['total_gastado'], 2); ?></td>
+                                    <td>
+                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
+                                            Ver Reservas
+                                        </a>
+                                    </td>
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
