@@ -36,10 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['user_id'] = $user_id;
                     $_SESSION['nombre'] = $db_nombre;
                     $_SESSION['rol'] = $rol;
-
+                    
                     if ($rol == 'cliente') {
+                        $_SESSION['cliente_id'] = $user_id; // Ahora el carrito reconocerá a los clientes
                         header('Location: ../cliente/PaginaInfo.php');
                         exit();
+                    }
+                    
                     } elseif ($rol == 'administrador') {
                         header('Location: ../administrador/admin.php');
                         exit();
