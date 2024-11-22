@@ -5,6 +5,9 @@ Este proyecto es un sistema de gestión para un restaurante que permite controla
 ## Tabla de Contenidos
 - [Objetivo](#objetivo)
 - [Descripción del Sistema](#descripción-del-sistema)
+- [Integrantes del proyecto](#integrantes-del-proyecto).
+- [Tecnologías Utilizadas](#tecnologias-utilizadas).
+- [Diagrama de Clases del Proyecto](#diagrama-de-clases-del-proyecto)
 - [Modelo de Datos](#modelo-de-datos)
   - [Tablas](#tablas)
   - [Relaciones entre Tablas](#relaciones-entre-tablas)
