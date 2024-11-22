@@ -48,11 +48,11 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 | CSS             | Lenguaje de diseño para estilizar la página web     | <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS" width="50"> |
 | GitHub          | Repositorio para control de versiones               | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1024px-Github-desktop-logo-symbol.svg.png" alt="GitHub" width="50"> |
 | Visual Studio Code | Editor de código fuente                         | <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="VSCode" width="50"> |
-| Office 365      | Suite de herramientas para gestión y colaboración   | <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Microsoft_Office_2013_logo.svg" alt="Office 365" width="50"> |
-| Lucidchart      | Herramienta para diseño de diagramas                | <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Lucidchart_logo.svg" alt="Lucidchart" width="50"> |
-| PlantUML        | Generación de diagramas UML mediante texto          | <img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/PlantUML-logo.png" alt="PlantUML" width="50"> |
-| XAMPP           | Servidor local para desarrollo web                  | <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/XAMPP_logo.svg" alt="XAMPP" width="50"> |
-| phpMyAdmin      | Herramienta de gestión para bases de datos MySQL    | <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/PhpMyAdmin_logo.png" alt="phpMyAdmin" width="50"> |
+| Office 365      | Suite de herramientas para gestión y colaboración   | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Microsoft_365_%282022%29.svg/800px-Microsoft_365_%282022%29.svg.png" alt="Office 365" width="50"> |
+| Lucidchart      | Herramienta para diseño de diagramas                | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Lucidchart-logo.svg/512px-Lucidchart-logo.svg.png?20181104012036" alt="Lucidchart" width="50"> |
+| PlantUML        | Generación de diagramas UML mediante texto          | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Plantuml_Logo.svg/1920px-Plantuml_Logo.svg.png" alt="PlantUML" width="50"> |
+| XAMPP           | Servidor local para desarrollo web                  | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Xampp_logo.svg/1920px-Xampp_logo.svg.png" alt="XAMPP" width="50"> |
+| phpMyAdmin      | Herramienta de gestión para bases de datos MySQL    | <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/PhpMyAdmin_logo.png?20161018133302" alt="phpMyAdmin" width="50"> |
 
 ---
 
