@@ -46,7 +46,7 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 | PHP             | Lenguaje de programación para el desarrollo backend | <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="PHP" width="50"> |
 | HTML            | Lenguaje de marcado para la estructura web          | <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML" width="50"> |
 | CSS             | Lenguaje de diseño para estilizar la página web     | <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS" width="50"> |
-| GitHub          | Repositorio para control de versiones               | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/600px-Octicons-mark-github.svg.png?20180806170715" alt="GitHub" width="50"> |
+| GitHub          | Repositorio para control de versiones               | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1024px-Github-desktop-logo-symbol.svg.png" alt="GitHub" width="50"> |
 | Visual Studio Code | Editor de código fuente                         | <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="VSCode" width="50"> |
 | Office 365      | Suite de herramientas para gestión y colaboración   | <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Microsoft_Office_2013_logo.svg" alt="Office 365" width="50"> |
 | Lucidchart      | Herramienta para diseño de diagramas                | <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Lucidchart_logo.svg" alt="Lucidchart" width="50"> |
