@@ -37,7 +37,7 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 | Balderrama Delgado Maciel         | FrontEnd                        |
 | Alfaro Delgado Horacio            | Backend                         |
 
----
+--
 
 ## Tecnologías Utilizadas
 
@@ -54,7 +54,9 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 | XAMPP           | Servidor local para desarrollo web                  | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Xampp_logo.svg/1920px-Xampp_logo.svg.png" alt="XAMPP" width="50"> |
 | phpMyAdmin      | Herramienta de gestión para bases de datos MySQL    | <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/PhpMyAdmin_logo.png?20161018133302" alt="phpMyAdmin" width="50"> |
 
----
+--
+## Diagrama De Clases del Proyecto
+https://lucid.app/lucidchart/db27a3a8-def4-4988-9781-60283fcb8410/edit?viewport_loc=-304%2C-360%2C4992%2C2361%2CHWEp-vi-RSFO&invitationId=inv_844e572c-b9ec-4a7f-9e06-89ac2489b931
 
 ## Modelo de Datos
 El modelo de datos se basa en una estructura de tablas en una base de datos relacional. Las principales tablas son:
