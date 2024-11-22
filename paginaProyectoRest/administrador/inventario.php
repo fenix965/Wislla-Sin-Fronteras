@@ -169,10 +169,10 @@ if (!$result_ingredientes) {
                                     <td class="amount-column">Bs <?= number_format($row['precio_unitario'], 2); ?></td>
                                     <td>
                                         <a href="editar_ingrediente.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-edit" style="color: white;"></i>
                                         </a>
                                         <a href="eliminar_ingrediente.php?id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash" style="color: white;"></i>
                                         </a>
                                     </td>
                                 </tr>

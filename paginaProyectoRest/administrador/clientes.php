@@ -171,6 +171,7 @@ $nombre_admin = $_SESSION['nombre'];
                                     <th>Total Reservas</th>
                                     <th>Última Reserva</th>
                                     <th>Total Gastado</th>
+                                    <th>Reservas</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,13 +182,20 @@ $nombre_admin = $_SESSION['nombre'];
                                     <td><?= htmlspecialchars($row['email']); ?></td>
                                     <td><?= htmlspecialchars($row['telefono']); ?></td>
                                     <td>
-                                        <span class="badge bg-info">
-                                            <?= htmlspecialchars($row['total_reservas']); ?>
-                                        </span>
+                                        <span class="badge bg-info"><?= htmlspecialchars($row['total_reservas']); ?></span>
                                     </td>
                                     <td><?= $row['ultima_reserva'] ? date('d/m/Y', strtotime($row['ultima_reserva'])) : 'Sin reservas'; ?></td>
-                                    <td><?= number_format($row['total_gastado'], 2); ?></td>
-                                    
+                                    <td>Bs. <?= number_format($row['total_gastado'], 2); ?></td>
+                                    <td>
+                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" 
+                                        class="btn btn-sm" 
+                                        style="background-color: #aa5518; border-color: #aa5518; color: white;">
+                                            <i class="fas fa-edit"></i>
+                                            Ver Reservas
+                                        </a>
+                                    </td>
+
+
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
@@ -213,7 +221,6 @@ $nombre_admin = $_SESSION['nombre'];
         </div>
     </div>
 
-    <!-- Modal de eliminación -->
     <div class="modal fade" id="eliminarModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
