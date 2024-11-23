@@ -13,7 +13,7 @@ $cliente_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 // Obtener reservas del cliente
 $sql = "SELECT r.*, c.nombre, c.apellidos 
         FROM reservas r 
-        INNER JOIN clientes c ON r.user_id = c.id 
+        INNER JOIN clientes c ON r.cliente_id = c.id 
         WHERE c.id = ? AND r.eliminado = 0";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $cliente_id);
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_reserva'])) 
 <body>
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header bg-primary text-white">
+        <div class="--primary-brown">
             <h3><?= $cliente ? 'Reservas de ' . htmlspecialchars($cliente['nombre'] . ' ' . $cliente['apellidos']) : 'Reservas'; ?></h3>
         </div>
         <div class="card-body">

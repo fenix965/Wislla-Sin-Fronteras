@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Base de datos: `restaurante_db`
 --
 
+CREATE DATABASE restaurante_db;
+USE restaurante_db;
+
 -- --------------------------------------------------------
 
 --
@@ -122,6 +125,7 @@ INSERT INTO `ingredientes` (`id`, `nombre`, `cantidad_disponible`, `unidad_medid
 (9, 'Tomates chiquitos', 120, 'kilogramos', '1.60', 1, NULL),
 (10, 'Lechuga', 50, 'kg', '0.40', 0, 'descontinuado'),
 (11, 'Zanahorias', 20, 'kg', '2.00', 0, 'error_registro');
+
 
 -- --------------------------------------------------------
 
@@ -753,6 +757,20 @@ ALTER TABLE `reservas_mesas`
   ADD CONSTRAINT `reservas_mesas_ibfk_1` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `reservas_mesas_ibfk_2` FOREIGN KEY (`mesa_id`) REFERENCES `mesas` (`id`) ON DELETE CASCADE;
 COMMIT;
+
+--
+-- Estructura de tabla para la tabla `historial_cambios_ingredientes`
+--
+CREATE TABLE `historial_cambios_ingredientes` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `ingrediente_id` BIGINT(20) NOT NULL,
+  `accion` ENUM('ELIMINAR', 'RESTAURAR') NOT NULL,
+  `usuario` VARCHAR(255) NOT NULL, -- Nombre o ID del usuario que realiza el cambio
+  `motivo` VARCHAR(255), -- Motivo del cambio
+  `fecha_hora` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha y hora del cambio
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`ingrediente_id`) REFERENCES `ingredientes`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

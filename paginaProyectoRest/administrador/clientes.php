@@ -23,7 +23,7 @@ $sql = "SELECT
         ) ORDER BY r.fecha DESC SEPARATOR ';'
     ) as historial_reservas
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.user_id
+LEFT JOIN reservas r ON c.id = r.cliente_id
 GROUP BY 
     c.id,
     c.usuario_id,
@@ -44,7 +44,7 @@ $sql_stats = "SELECT
     SUM(r.total) as ingresos_totales,
     AVG(r.total) as promedio_reserva
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.user_id";
+LEFT JOIN reservas r ON c.id = r.cliente_id";
 
 $stats_result = mysqli_query($conn, $sql_stats);
 $stats = mysqli_fetch_assoc($stats_result);
@@ -187,10 +187,15 @@ $nombre_admin = $_SESSION['nombre'];
                                     <td><?= $row['ultima_reserva'] ? date('d/m/Y', strtotime($row['ultima_reserva'])) : 'Sin reservas'; ?></td>
                                     <td>Bs. <?= number_format($row['total_gastado'], 2); ?></td>
                                     <td>
-                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
+                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" 
+                                        class="btn btn-sm" 
+                                        style="background-color: #aa5518; border-color: #aa5518; color: white;">
+                                            <i class="fas fa-edit"></i>
                                             Ver Reservas
                                         </a>
                                     </td>
+
+
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>
@@ -216,7 +221,6 @@ $nombre_admin = $_SESSION['nombre'];
         </div>
     </div>
 
-    <!-- Modal de eliminación -->
     <div class="modal fade" id="eliminarModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
