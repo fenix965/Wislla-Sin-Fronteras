@@ -26,14 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nombre'])) {
     $unidad_medida = mysqli_real_escape_string($conn, $_POST['unidad_medida']);
     $precio_unitario = mysqli_real_escape_string($conn, $_POST['precio_unitario']);
     
-    // Verificar si el ingrediente ya existe (ignorando mayúsculas y minúsculas)
-    $sql_check = "SELECT * FROM ingredientes WHERE LOWER(nombre) = LOWER('$nombre')";
+    // Verificar si el ingrediente similar ya existe (ignorando mayúsculas y minúsculas)
+    $sql_check = "SELECT * FROM ingredientes WHERE LOWER(nombre) LIKE LOWER('$nombre%')";
     $result_check = mysqli_query($conn, $sql_check);
     
     if (mysqli_num_rows($result_check) > 0) {
-        // Si el ingrediente ya existe, mostrar mensaje de error
-        $mensaje_error = 'El ingrediente con ese nombre ya existe.';
-        $mensaje_tipo = 'danger'; // Error
+        // Si el ingrediente ya existe pero está eliminado
+        $ingrediente_existente = mysqli_fetch_assoc($result_check);
+        if ($ingrediente_existente['activo'] == 0) {
+            // Ingrediente existe pero está eliminado
+            $mensaje_error = 'El ingrediente "' . htmlspecialchars($nombre) . '" ya existe pero está eliminado. Por favor dirígete a la Página de Ingredientes eliminados para restaurarlo';
+            $mensaje_tipo = 'warning'; // Advertencia
+        } else {
+            // Si el ingrediente existe y está activo
+            $mensaje_error = 'El ingrediente con ese nombre ya existe.';
+            $mensaje_tipo = 'danger'; // Error
+        }
     } else {
         // Insertar el nuevo ingrediente en la base de datos
         $sql_insert = "INSERT INTO ingredientes (nombre, cantidad_disponible, unidad_medida, precio_unitario, activo) 
@@ -129,17 +137,27 @@ if (!$result_ingredientes) {
                     </div>
                 </div>
             </div>
+
             <section class="filter-section">
                 <div class="row">
                     <div class="col">
+                        <!-- Campo de búsqueda en tiempo real -->
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar ingrediente..." onkeyup="buscarIngredientes()">
+                    </div>
+                    <div class="col text-end">
                         <!-- Botón para agregar ingrediente -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
                             <i class="fas fa-plus"></i> Agregar Ingrediente
                         </button>
+                        <!-- Botón para ver ingredientes eliminados -->
+                        <a href="ingredientes_eliminados.php" class="btn btn-secondary mt-2">
+                            <i class="fas fa-trash"></i> Ver Ingredientes Eliminados
+                        </a>
                     </div>
                 </div>
             </section>
 
+            
             <section class="stats-card">
                 <div class="table-responsive">
                     <table class="table">
@@ -259,6 +277,26 @@ if (!$result_ingredientes) {
         </div>
     </div>
 
+    <!-- Modal de error para eliminación sin motivo -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="errorModalLabel">Error en la Eliminación</h5>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Por favor seleccione un motivo para la eliminación del ingrediente.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Mostrar el modal si existe un mensaje de error
@@ -269,34 +307,51 @@ if (!$result_ingredientes) {
 
         // Script para el manejo de la eliminación
         document.addEventListener('DOMContentLoaded', function() {
-        let deleteUrl = '';
+            let deleteUrl = '';
 
-        // Capturar el clic en los botones de eliminar
-        document.querySelectorAll('a.btn-danger').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                deleteUrl = this.getAttribute('href');
-                let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                deleteModal.show();
+            // Capturar el clic en los botones de eliminar
+            document.querySelectorAll('a.btn-danger').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    deleteUrl = this.getAttribute('href');
+                    let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                    deleteModal.show();
+                });
+            });
+
+            // Manejar la confirmación de eliminación
+            document.getElementById('confirmDelete').addEventListener('click', function() {
+                let motivo = document.getElementById('motivo_eliminacion').value;
+                if (motivo) {
+                    // Construir la URL correctamente
+                    if (deleteUrl.includes('?')) {
+                        deleteUrl += '&motivo=' + encodeURIComponent(motivo);
+                    } else {
+                        deleteUrl += '?motivo=' + encodeURIComponent(motivo);
+                    }
+                    window.location.href = deleteUrl;
+                } else {
+                    // Mostrar el modal de error si no se seleccionó un motivo
+                    var errorModal = new bootstrap.Modal(document.getElementById('errorModal'), {});
+                    errorModal.show();
+                }
             });
         });
 
-        // Manejar la confirmación de eliminación
-        document.getElementById('confirmDelete').addEventListener('click', function() {
-            let motivo = document.getElementById('motivo_eliminacion').value;
-            if (motivo) {
-                // Construir la URL correctamente
-                if (deleteUrl.includes('?')) {
-                    deleteUrl += '&motivo=' + encodeURIComponent(motivo);
-                } else {
-                    deleteUrl += '?motivo=' + encodeURIComponent(motivo);
-                }
-                window.location.href = deleteUrl;
-            } else {
-                alert('Por favor seleccione un motivo para la eliminación');
-            }
+        // Script para búsqueda en tiempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            searchInput.addEventListener('input', function() {
+                const filter = searchInput.value.toLowerCase();
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    row.style.display = rowText.includes(filter) ? '' : 'none';
+                });
+            });
         });
-    });
+
     </script>
 </body>
 </html>
