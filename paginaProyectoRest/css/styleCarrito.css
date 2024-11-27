@@ -1,0 +1,222 @@
+
+.cart-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://fotografias.larazon.es/clipping/cmsimages01/2023/11/16/080445F5-DC20-409E-A8B9-498C90C12C90/dieta-mexicana-reduce-inflamacion-colesterol-malo-debido-sus-componentes_98.jpg?crop=1280,720,x0,y0&width=1900&height=1069&optimize=low&format=webply');    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+    position: relative;
+}
+
+
+.cart-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom right, transparent 49%, #faf5f0 50%);
+}
+
+.cart-container {
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(43, 24, 16, 0.08);
+    padding: 40px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 1;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(43, 24, 16, 0.04);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+.navbar {
+    background-color: #2b1810 !important; /* Marrón oscuro */
+}
+
+.navbar.scrolled {
+    background-color: #2b1810 !important;
+}
+
+.cart-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(43, 24, 16, 0.08);
+    background-color: #faf5f0;
+}
+
+.cart-item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-right: 30px;
+    box-shadow: 0 8px 16px rgba(43, 24, 16, 0.1);
+}
+
+.cart-item-details {
+    flex-grow: 1;
+    padding-right: 20px;
+}
+
+.cart-item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2b1810;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.cart-item-price {
+    font-size: 1.5rem;
+    color: #c17817;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #faf5f0;
+    padding: 8px 15px;
+    border-radius: 25px;
+    width: fit-content;
+}
+
+.quantity-btn {
+    background: none;
+    border: 2px solid #8b4513;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #8b4513;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #8b4513;
+    color: white;
+}
+
+.cart-summary {
+    background: linear-gradient(145deg, #ffffff, #faf5f0);
+    border-radius: 25px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 10px 20px rgba(43, 24, 16, 0.05);
+}
+
+.cart-summary h4 {
+    color: #2b1810;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+}
+
+.cart-summary .d-flex {
+    padding: 10px 0;
+    font-size: 1.1rem;
+    color: #2b1810;
+}
+
+.checkout-btn {
+    background: linear-gradient(135deg, #8b4513, #c17817);
+    color: white;
+    border: none;
+    padding: 18px 35px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(139, 69, 19, 0.2);
+}
+
+.checkout-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #6b3410, #8b4513);
+    box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+}
+
+.checkout-btn i {
+    margin-right: 10px;
+}
+
+.remove-btn {
+    color: #d64545;
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.remove-btn:hover {
+    background-color: #fff5f5;
+    color: #b83232;
+    transform: rotate(90deg);
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.empty-cart i {
+    font-size: 64px;
+    color: #8b4513;
+    margin-bottom: 30px;
+    opacity: 0.5;
+}
+
+.empty-cart h3 {
+    color: #2b1810;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+}
+
+.empty-cart p {
+    color: #6b3410;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.empty-cart .btn {
+    background-color: #8b4513;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.empty-cart .btn:hover {
+    background-color: #c17817;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(139, 69, 19, 0.2);
+}
