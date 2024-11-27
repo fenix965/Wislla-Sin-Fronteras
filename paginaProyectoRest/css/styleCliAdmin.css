@@ -168,7 +168,17 @@ body {
     border-collapse: separate;
     border-spacing: 0;
 }
+.table a, 
+.table a i {
+   color: white;
+   text-decoration: none;
+}
 
+.table a:hover,
+.table a:hover i {
+   color: white;
+   text-decoration: none;
+}
 .table thead th {
     background-color: var(--primary-brown);
     color: #fff;
@@ -199,7 +209,7 @@ body {
     border-bottom: none;
 }
 
-/* Badges */
+
 .badge {
     padding: 6px 12px;
     border-radius: 20px;

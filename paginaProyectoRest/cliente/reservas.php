@@ -98,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_begin_transaction($db);
 
         // Insertar reserva
-        $query = "INSERT INTO reservas (user_id, fecha, hora, numero_personas, total)
-                  VALUES ('$user_id', '$fecha', '$hora', $num_personas, $total)";
+        $query = "INSERT INTO reservas (cliente_id, mesa_id, fecha, hora, numero_personas, total)
+                  VALUES ('$user_id','$mesa_id', '$fecha', '$hora', $num_personas, $total)";
         if (!mysqli_query($db, $query)) {
             throw new Exception("Error al crear la reserva: " . mysqli_error($db));
         }
@@ -131,14 +131,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Obtener mesas disponibles agrupadas por ubicación
 $mesas_por_ubicacion = [];
-$query = "SELECT id, numero, capacidad, ubicacion FROM mesas WHERE estado = 'disponible' ORDER BY ubicacion, numero";
+$query = "SELECT id, numero, capacidad, ubicacion, imagen FROM mesas WHERE estado = 'disponible' ORDER BY ubicacion, numero";
 $result = mysqli_query($db, $query);
 while ($row = mysqli_fetch_assoc($result)) {
     $mesas_por_ubicacion[$row['ubicacion']][] = $row;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -146,145 +146,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservar Mesa</title>
+    <link rel="stylesheet" href="../css/styleReservas.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #faf5f0;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(43, 24, 16, 0.1);
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            color: #2b1810;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #2b1810;
-            font-weight: 500;
-        }
-
-        input[type="date"],
-        input[type="time"],
-        input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 10px;
-        }
-
-        .mesas-section {
-            margin-top: 20px;
-        }
-
-        .ubicacion-group {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #faf5f0;
-            border-radius: 10px;
-        }
-
-        .ubicacion-title {
-            font-family: 'Playfair Display', serif;
-            color: #2b1810;
-            margin-bottom: 15px;
-        }
-
-        .mesas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .mesa-option {
-            display: flex;
-            align-items: center;
-        }
-
-        .mesa-checkbox {
-            margin-right: 10px;
-        }
-
-        button {
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #6b3410;
-        }
-
-        .mensaje {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .mensaje.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .mensaje.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .precio-info {
-            font-size: 0.9em;
-            color: #6b3410;
-            margin-top: 5px;
-        }
-        .back-button {
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .back-button:hover {
-            background-color: #6b3410;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -318,33 +181,57 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <div class="ubicacion-group">
                         <h3 class="ubicacion-title"><?php echo $ubicacion; ?></h3>
                         <div class="mesas-grid">
-                            <?php foreach ($mesas as $mesa): ?>
-                                <div class="mesa-option">
-                                    <input type="checkbox" name="mesas[]" value="<?php echo $mesa['id']; ?>" 
-                                           class="mesa-checkbox" data-capacidad="<?php echo $mesa['capacidad']; ?>">
-                                    <span>Mesa <?php echo $mesa['numero']; ?> (<?php echo $mesa['capacidad']; ?> personas)</span>
+                        <?php foreach ($mesas as $mesa): ?>
+                            <div class="table-option">
+                                <span class="table-number">Mesa #<?php echo $mesa['numero']; ?></span>
+
+                                <?php
+                                $imagen_binaria = $mesa['imagen'];
+                                $imagen_base64 = base64_encode($imagen_binaria);
+                                $imagen_data_url = 'data:image/jpeg;base64,' . $imagen_base64;
+                                ?>
+                                <img src="<?php echo $imagen_data_url; ?>" 
+                                     class="table-image" 
+                                     alt="Mesa <?php echo $mesa['numero']; ?>">
+
+                                <div class="table-details">
+                                    <div class="form-check">
+                                        <input type="checkbox" 
+                                               class="form-check-input mesa-checkbox" 
+                                               id="mesa-<?php echo $mesa['id']; ?>" 
+                                               name="mesas[]" 
+                                               value="<?php echo $mesa['id']; ?>"
+                                               data-capacidad="<?php echo $mesa['capacidad']; ?>">
+                                        <label class="form-check-label" for="mesa-<?php echo $mesa['id']; ?>">
+                                            Seleccionar
+                                        </label>
+                                    </div>
+                                    <div class="precio-info">
+                                        Capacidad: <?php echo $mesa['capacidad']; ?> personas
+                                    </div>
+                                    <div class="precio-info">
+                                        Precio: $<?php
+                                        switch ($ubicacion) {
+                                            case 'Planta Baja':
+                                                echo "50";
+                                                break;
+                                            case 'Planta Alta':
+                                                echo "70";
+                                                break;
+                                            case 'Terraza':
+                                                echo "60";
+                                                break;
+                                            case 'Salón Privado':
+                                                echo "100";
+                                                break;
+                                            default:
+                                                echo "40";
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="precio-info">
-                            Precio por mesa: $<?php
-                                switch ($ubicacion) {
-                                    case 'Planta Baja':
-                                        echo "50";
-                                        break;
-                                    case 'Planta Alta':
-                                        echo "70";
-                                        break;
-                                    case 'Terraza':
-                                        echo "60";
-                                        break;
-                                    case 'Salón Privado':
-                                        echo "100";
-                                        break;
-                                    default:
-                                        echo "40";
-                                }
-                            ?>
+                            </div>
+                        <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -356,45 +243,91 @@ while ($row = mysqli_fetch_assoc($result)) {
     </div>
 
     <script>
-        function validarFormulario() {
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora').value;
-            const numPersonas = parseInt(document.getElementById('numero_personas').value);
-            const mesasSeleccionadas = document.querySelectorAll('input[name="mesas[]"]:checked');
-            
-            // Validar fecha
-            const hoy = new Date().toISOString().split('T')[0];
-            if (fecha < hoy) {
-                alert('La fecha no puede ser anterior al día de hoy.');
-                return false;
-            }
+        function mostrarNotificacion(mensaje, tipo = 'error') {
+    // Crear contenedor de notificación si no existe
+    let notificacionContainer = document.getElementById('notificacion-container');
+    if (!notificacionContainer) {
+        notificacionContainer = document.createElement('div');
+        notificacionContainer.id = 'notificacion-container';
+        notificacionContainer.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 300px;
+        `;
+        document.body.appendChild(notificacionContainer);
+    }
 
-            // Validar que se haya seleccionado al menos una mesa
-            if (mesasSeleccionadas.length === 0) {
-                alert('Por favor, seleccione al menos una mesa.');
-                return false;
-            }
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.style.cssText = `
+        background-color: ${tipo === 'error' ? '#f8d7da' : '#d4edda'};
+        color: ${tipo === 'error' ? '#721c24' : '#155724'};
+        border: 1px solid ${tipo === 'error' ? '#f5c6cb' : '#c3e6cb'};
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    `;
+    notificacion.textContent = mensaje;
 
-            // Validar capacidad total
-            let capacidadTotal = 0;
-            mesasSeleccionadas.forEach(mesa => {
-                capacidadTotal += parseInt(mesa.dataset.capacidad);
-            });
+    // Añadir y mostrar la notificación
+    notificacionContainer.appendChild(notificacion);
+    setTimeout(() => {
+        notificacion.style.opacity = '1';
+    }, 10);
 
-            if (numPersonas > capacidadTotal) {
-                alert('El número de personas excede la capacidad de las mesas seleccionadas.');
-                return false;
-            }
+    // Ocultar y eliminar después de 5 segundos
+    setTimeout(() => {
+        notificacion.style.opacity = '0';
+        setTimeout(() => {
+            notificacionContainer.removeChild(notificacion);
+        }, 300);
+    }, 5000);
+}
 
-            // Validar horario de reserva
-            const horaNum = parseInt(hora.split(':')[0]);
-            if (horaNum < 12 || horaNum >= 23) {
-                alert('Las reservas solo están disponibles entre las 12:00 y las 23:00.');
-                return false;
-            }
+function validarFormulario() {
+    const fecha = document.getElementById('fecha').value;
+    const hora = document.getElementById('hora').value;
+    const numPersonas = parseInt(document.getElementById('numero_personas').value);
+    const mesasSeleccionadas = document.querySelectorAll('input[name="mesas[]"]:checked');
+    
+    // Validar fecha
+    const hoy = new Date().toISOString().split('T')[0];
+    if (fecha < hoy) {
+        mostrarNotificacion('La fecha no puede ser anterior al día de hoy.');
+        return false;
+    }
 
-            return true;
-        }
+    // Validar que se haya seleccionado al menos una mesa
+    if (mesasSeleccionadas.length === 0) {
+        mostrarNotificacion('Por favor, seleccione al menos una mesa.');
+        return false;
+    }
+
+    // Validar capacidad total
+    let capacidadTotal = 0;
+    mesasSeleccionadas.forEach(mesa => {
+        capacidadTotal += parseInt(mesa.dataset.capacidad);
+    });
+
+    if (numPersonas > capacidadTotal) {
+        mostrarNotificacion('El número de personas excede la capacidad de las mesas seleccionadas.');
+        return false;
+    }
+
+    // Validar horario de reserva
+    const horaNum = parseInt(hora.split(':')[0]);
+    if (horaNum < 12 || horaNum >= 23) {
+        mostrarNotificacion('Las reservas solo están disponibles entre las 12:00 y las 23:00.');
+        return false;
+    }
+
+    return true;
+}
     </script>
 </body>
 </html>

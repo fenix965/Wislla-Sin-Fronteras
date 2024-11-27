@@ -8,10 +8,13 @@ if (!$conn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-$query = "SELECT * FROM platillos"; 
-$result = mysqli_query($conn, $query);
+$query_categorias = "SELECT DISTINCT categoria FROM platillos ORDER BY categoria";
+$result_categorias = mysqli_query($conn, $query_categorias);
 
-if (!$result) {
+$query_platillos = "SELECT * FROM platillos"; 
+$result_platillos = mysqli_query($conn, $query_platillos);
+
+if (!$result_categorias || !$result_platillos) {
     die("Error en la consulta: " . mysqli_error($conn));
 }
 ?>
@@ -26,44 +29,9 @@ if (!$result) {
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/22b0eb3ac8.js" crossorigin="anonymous"></script>
-    
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../imagenes/WisllaLogo.jpg" alt="Logo de Wislla" style="max-width: 100px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="paginaInfo.php">Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="menu.php">Menú</a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['nombre'])): ?>
-                            <span class="nav-link">Bienvenido, <?php echo $_SESSION['nombre']; ?>!</span>
-                        <?php endif; ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['nombre'])): ?>
-                            <form action="../registro/logout.php" method="POST" class="d-inline">
-    <button type="submit" class="btn btn-outline-light btn-sm">Cerrar sesión</button>
-</form>
 
-                        <?php else: ?>
-                            <a href="../registro/login.php" class="btn btn-outline-light btn-sm">Iniciar sesión</a>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <section class="menu-hero">
         <div class="container">
@@ -77,39 +45,42 @@ if (!$result) {
             <div class="category-filter">
                 <h4 class="mb-3">Categorías</h4>
                 <div class="d-flex flex-wrap gap-2">
-                    <span class="badge-category">Todos</span>
-                    <span class="badge-category">Entradas</span>
-                    <span class="badge-category">Platos Principales</span>
-                    <span class="badge-category">Postres</span>
-                    <span class="badge-category">Bebidas</span>
+                    <span class="badge-category active" data-category="Todos">Todos</span>
+                    <?php 
+                    mysqli_data_seek($result_categorias, 0);
+                    while ($categoria = mysqli_fetch_assoc($result_categorias)) {
+                        echo '<span class="badge-category" data-category="' . htmlspecialchars($categoria['categoria']) . '">' . htmlspecialchars($categoria['categoria']) . '</span>';
+                    } 
+                    ?>
                 </div>
             </div>
 
             <div class="row">
-                <?php while ($row = mysqli_fetch_assoc($result)) { 
-    $imagen = !empty($row['imagen']) ? 'data:image/jpeg;base64,' . base64_encode($row['imagen']) : 'imagenes/default-dish.jpg';
-?>
-    <div class="col-md-6 col-lg-4">
-        <div class="menu-card">
-            <img src="<?php echo $imagen; ?>" 
-                 alt="<?php echo $row['nombre']; ?>" 
-                 class="card-img-top">
-            <div class="menu-card-body">
-                <h3 class="menu-card-title"><?php echo $row['nombre']; ?></h3>
-                <p class="text-muted"><?php echo $row['descripcion']; ?></p>
-                <div>
-                    <span class="menu-card-price">Bs <?php echo $row['precio']; ?></span><br>
-                    <hr>
-                    <button class="add-to-cart-btn" 
-                            onclick="agregarAlCarrito(<?php echo $row['id']; ?>, '<?php echo $row['nombre']; ?>', <?php echo $row['precio']; ?>, '<?php echo $imagen; ?>')">
-                        <i class="fas fa-plus me-2"></i>Agregar al Carrito
-                    </button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-<?php } ?>
+                <?php 
+                mysqli_data_seek($result_platillos, 0);
+                while ($row = mysqli_fetch_assoc($result_platillos)) { 
+                    $imagen = !empty($row['imagen']) ? 'data:image/jpeg;base64,' . base64_encode($row['imagen']) : 'imagenes/default-dish.jpg';
+                ?>
+                    <div class="col-md-6 col-lg-4 menu-item" data-category="<?php echo htmlspecialchars($row['categoria']); ?>">
+                        <div class="menu-card">
+                            <img src="<?php echo $imagen; ?>" 
+                                 alt="<?php echo $row['nombre']; ?>" 
+                                 class="card-img-top">
+                            <div class="menu-card-body">
+                                <h3 class="menu-card-title"><?php echo $row['nombre']; ?></h3>
+                                <p class="text-muted"><?php echo $row['descripcion']; ?></p>
+                                <div>
+                                    <span class="menu-card-price">Bs <?php echo $row['precio']; ?></span><br>
+                                    <hr>
+                                    <button class="add-to-cart-btn" 
+                                            onclick="agregarAlCarrito(<?php echo $row['id']; ?>, '<?php echo $row['nombre']; ?>', <?php echo $row['precio']; ?>, '<?php echo $imagen; ?>')">
+                                        <i class="fas fa-plus me-2"></i>Agregar al Carrito
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -121,22 +92,21 @@ if (!$result) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function agregarAlCarrito(id, nombre, precio, imagen) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "agregar_carrito.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "agregar_carrito.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    var datos = "id=" + id + "&nombre=" + encodeURIComponent(nombre) + "&precio=" + precio + "&imagen=" + encodeURIComponent(imagen);
+            var datos = "id=" + id + "&nombre=" + encodeURIComponent(nombre) + "&precio=" + precio + "&imagen=" + encodeURIComponent(imagen);
 
-    xhr.onload = function() {
-        if (xhr.status == 200) {
-            var carrito = JSON.parse(xhr.responseText);
-            console.log(carrito);
-            mostrarNotificacion('Producto agregado al carrito');
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    var carrito = JSON.parse(xhr.responseText);
+                    console.log(carrito);
+                    mostrarNotificacion('Producto agregado al carrito');
+                }
+            };
+            xhr.send(datos);
         }
-    };
-    xhr.send(datos);
-}
-
 
         function mostrarNotificacion(mensaje) {
             const notificacion = document.createElement('div');
@@ -160,6 +130,29 @@ if (!$result) {
         function mostrarCarrito() {
             window.location.href = 'carrito.php';
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBadges = document.querySelectorAll('.badge-category');
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            categoryBadges.forEach(badge => {
+                badge.addEventListener('click', function() {
+                    categoryBadges.forEach(b => b.classList.remove('active'));
+                    
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+
+                    menuItems.forEach(item => {
+                        if (category === 'Todos' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>

@@ -23,7 +23,7 @@ $sql = "SELECT
         ) ORDER BY r.fecha DESC SEPARATOR ';'
     ) as historial_reservas
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.user_id
+LEFT JOIN reservas r ON c.id = r.cliente_id
 GROUP BY 
     c.id,
     c.usuario_id,
@@ -44,7 +44,7 @@ $sql_stats = "SELECT
     SUM(r.total) as ingresos_totales,
     AVG(r.total) as promedio_reserva
 FROM clientes c
-LEFT JOIN reservas r ON c.id = r.user_id";
+LEFT JOIN reservas r ON c.id = r.cliente_id";
 
 $stats_result = mysqli_query($conn, $sql_stats);
 $stats = mysqli_fetch_assoc($stats_result);
@@ -94,13 +94,11 @@ $nombre_admin = $_SESSION['nombre'];
             </div>
         </aside>
 
-        <!-- Contenido principal -->
         <main class="main-content">
             <header class="content-header">
                 <h2>Gestión de Clientes</h2>
             </header>
 
-            <!-- Tarjetas de estadísticas -->
             <div class="row mb-4">
                 <div class="col-md-3">
                     <div class="stats-card text-center">
@@ -187,10 +185,11 @@ $nombre_admin = $_SESSION['nombre'];
                                     <td><?= $row['ultima_reserva'] ? date('d/m/Y', strtotime($row['ultima_reserva'])) : 'Sin reservas'; ?></td>
                                     <td>Bs. <?= number_format($row['total_gastado'], 2); ?></td>
                                     <td>
-                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
+                                        <a href="reservas_cliente.php?id=<?= $row['id']; ?>" style="color: white; background-color: #aa5518; padding: 5px 10px; border-radius: 5px; text-decoration: none;">
                                             Ver Reservas
                                         </a>
                                     </td>
+
                                 </tr>
                                 <?php endwhile; ?>
                             </tbody>

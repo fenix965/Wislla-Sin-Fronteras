@@ -1,91 +1,86 @@
 <?php
 session_start();
 
-// Si ya existe un carrito de compras, lo vaciamos
-if (isset($_SESSION['carrito'])) {
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    // Si no ha iniciado sesión, redirige al login
+    header('Location: ../registro/login.php');
+    exit();
+}
+
+// Incluye la conexión a la base de datos
+include '../conexion.php';
+$conn = conexion();
+
+// Verifica si la conexión a la base de datos fue exitosa
+if (!$conn) {
+    die("Error: no se pudo conectar a la base de datos.");
+}
+
+// Verifica si el carrito no está vacío
+if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
+    die("Error: el carrito está vacío.");
+}
+
+$cliente_id = $_SESSION['user_id'];
+$mesa_id = $_POST['mesa_id'] ?? null; // Maneja el caso donde no se envíe la mesa_id
+$fecha = date("Y-m-d H:i:s");
+$estado = "pendiente";
+$total = 0;
+$detalles = [];
+
+// Procesa el carrito
+foreach ($_SESSION['carrito'] as $item) {
+    // Asegúrate de que 'cantidad' esté definida y sea válida
+    $cantidad = isset($item['cantidad']) ? $item['cantidad'] : 1; // Si no está definida, usa 1 por defecto
+    $subtotal = $item['precio'] * $cantidad;
+    $total += $subtotal;
+    $detalles[] = $item['nombre'] . " x " . $cantidad;
+}
+
+// Convierte los detalles a texto
+$detalles_texto = implode(", ", $detalles);
+
+// Inserta el pedido en la base de datos
+$query = "INSERT INTO pedidos (cliente_id, mesa_id, fecha, estado, total, detalles) VALUES (?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($query);
+
+if (!$stmt) {
+    die("Error al preparar la consulta: " . $conn->error);
+}
+
+$stmt->bind_param("iissds", $cliente_id, $mesa_id, $fecha, $estado, $total, $detalles_texto);
+
+// Ejecuta la inserción en la tabla `pedidos`
+if ($stmt->execute()) {
+    // Obtiene el id del pedido recién insertado
+    $pedido_id = $stmt->insert_id;
+
+    // Inserta los detalles del pedido en la tabla `orden`
+    $orden_query = "INSERT INTO orden (pedido_id, platillo_id, cantidad) VALUES (?, ?, ?)";
+    $orden_stmt = $conn->prepare($orden_query);
+
+    if (!$orden_stmt) {
+        die("Error al preparar la consulta para la tabla `orden`: " . $conn->error);
+    }
+
+    // Recorre cada item del carrito y lo inserta en la tabla `orden`
+    foreach ($_SESSION['carrito'] as $item) {
+        $platillo_id = $item['id']; // ID del platillo
+        $cantidad = isset($item['cantidad']) ? $item['cantidad'] : 1; // Cantidad del platillo
+
+        $orden_stmt->bind_param("iii", $pedido_id, $platillo_id, $cantidad);
+
+        if (!$orden_stmt->execute()) {
+            die("Error al insertar en la tabla `orden`: " . $orden_stmt->error);
+        }
+    }
+
+    // Limpia el carrito después de finalizar la compra
     unset($_SESSION['carrito']);
+
+    echo json_encode(['success' => true, 'message' => 'Compra finalizada con éxito']);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Error al guardar el pedido: ' . $stmt->error]);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compra Finalizada - Wislla Sin Fronteras</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Estilo para la notificación personalizada */
-        .custom-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #4CAF50; /* Verde */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            z-index: 1000;
-            max-width: 350px;
-        }
-
-        .custom-notification h4 {
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .custom-notification p {
-            margin: 10px 0;
-            font-size: 1rem;
-        }
-
-        .custom-notification .btn-close {
-            background-color: #f44336; /* Rojo para el botón de cerrar */
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .custom-notification .btn-close:hover {
-            background-color: #d32f2f;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Aquí va tu contenido del sitio -->
-    <script>
-        // Mostrar notificación de éxito
-        window.onload = function() {
-            // Crear la notificación
-            const notification = document.createElement('div');
-            notification.className = 'custom-notification';
-            notification.innerHTML = `
-                <h4>¡Gracias por tu compra!</h4>
-                <p>Tu pedido ha sido procesado con éxito. Te esperamos pronto en Wislla Sin Fronteras.</p>
-                <button class="btn-close" onclick="closeNotification()">Cerrar</button>
-            `;
-            document.body.appendChild(notification);
-
-            // Redirigir después de 5 segundos
-            setTimeout(function() {
-                window.location.href = 'menu.php'; // Redirección automática después de 5 segundos
-            }, 5000);
-        }
-
-        // Función para cerrar la notificación manualmente
-        function closeNotification() {
-            const notification = document.querySelector('.custom-notification');
-            if (notification) {
-                notification.remove();
-            }
-            window.location.href = 'menu.php'; // Redirección manual al menú después de cerrar la notificación
-        }
-    </script>
-
-</body>
-</html>

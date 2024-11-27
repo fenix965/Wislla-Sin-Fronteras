@@ -14,6 +14,9 @@ $result = mysqli_query($conn, $sql);
 if (!$result) {
     die("Error en la consulta: " . mysqli_error($conn));
 }
+$sql_total_salario = "SELECT SUM(salario) AS total_salarios FROM empleados";
+$result_total_salario = mysqli_query($conn, $sql_total_salario);
+$total_salarios = mysqli_fetch_assoc($result_total_salario)['total_salarios'];
 
 $nombre_admin = $_SESSION['nombre'];
 ?>
@@ -83,6 +86,7 @@ $nombre_admin = $_SESSION['nombre'];
                                     <li class="list-group-item">Email: <?= htmlspecialchars($row['email']); ?></li>
                                     <li class="list-group-item">Teléfono: <?= htmlspecialchars($row['telefono']); ?></li>
                                     <li class="list-group-item">Fecha ingreso: <?= htmlspecialchars($row['fecha_ingreso']); ?></li>
+                                    <li class="list-group-item">Salario: Bs. <?= number_format(htmlspecialchars($row['salario']), 2); ?></li>
                                 </ul>
                                 <div class="card-body">
                                     <a href="editarE.php?id=<?= $row['id']; ?>" class="card-link"><i class="fas fa-edit"></i> Editar Empleado</a><br><br>
@@ -95,10 +99,17 @@ $nombre_admin = $_SESSION['nombre'];
                     </div>
                 <?php endwhile; ?>
             </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <strong>Total de Salarios a Pagar:</strong> Bs. <?= number_format($total_salarios, 2); ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Modal de Confirmación de Despido -->
+
     <div class="modal fade" id="modalDespido" tabindex="-1" aria-labelledby="modalDespidoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -134,16 +145,113 @@ $nombre_admin = $_SESSION['nombre'];
         }
 
         function ejecutarDespido() {
-            const razon = document.getElementById('razonDespido').value.trim();
-            
-            if (!razon) {
-                alert('Por favor, ingrese las razones del despido.');
-                return;
+    const razon = document.getElementById('razonDespido').value.trim();
+
+    if (!razon) {
+        alert('Por favor, ingrese las razones del despido.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id', empleadoIdActual);
+    formData.append('razon', razon);
+
+    fetch('procesar_despido.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Create and show toast notification
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) {
+                const container = document.createElement('div');
+                container.id = 'toastContainer';
+                container.style.position = 'fixed';
+                container.style.top = '20px';
+                container.style.right = '20px';
+                container.style.zIndex = '1050';
+                document.body.appendChild(container);
             }
 
-            // Aquí podrías agregar código para enviar la razón del despido al servidor
-            window.location.href = `eliminarE.php?id=${empleadoIdActual}&razon=${encodeURIComponent(razon)}`;
+            const toast = document.createElement('div');
+            toast.classList.add('toast', 'bg-success', 'text-white');
+            toast.innerHTML = `
+                <div class="toast-header bg-success text-white">
+                    <strong class="me-auto">Wislla sin Fronteras</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Empleado despedido exitosamente
+                </div>
+            `;
+
+            document.getElementById('toastContainer').appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+
+            // Remove the specific employee card
+            const employeeCard = document.querySelector(`.employee-card:has(.card-link[href*="editarE.php?id=${empleadoIdActual}"])`);
+            if (employeeCard) {
+                employeeCard.remove();
+            }
+            modalDespido.hide();
+        } else {
+            // Error toast
+            const toastContainer = document.getElementById('toastContainer') || document.createElement('div');
+            toastContainer.id = 'toastContainer';
+            toastContainer.style.position = 'fixed';
+            toastContainer.style.top = '20px';
+            toastContainer.style.right = '20px';
+            toastContainer.style.zIndex = '1050';
+            document.body.appendChild(toastContainer);
+
+            const toast = document.createElement('div');
+            toast.classList.add('toast', 'bg-danger', 'text-white');
+            toast.innerHTML = `
+                <div class="toast-header bg-danger text-white">
+                    <strong class="me-auto">Error</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${data.message || 'Error al despedir al empleado'}
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
         }
+    })
+    .catch(error => {
+        console.error('Error al procesar la solicitud:', error);
+        // Error toast for network/fetch errors
+        const toastContainer = document.getElementById('toastContainer') || document.createElement('div');
+        toastContainer.id = 'toastContainer';
+        toastContainer.style.position = 'fixed';
+        toastContainer.style.top = '20px';
+        toastContainer.style.right = '20px';
+        toastContainer.style.zIndex = '1050';
+        document.body.appendChild(toastContainer);
+
+        const toast = document.createElement('div');
+        toast.classList.add('toast', 'bg-danger', 'text-white');
+        toast.innerHTML = `
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hubo un error al intentar procesar el despido
+            </div>
+        `;
+
+        toastContainer.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+    });
+}
 
         document.getElementById('search').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
@@ -154,6 +262,19 @@ $nombre_admin = $_SESSION['nombre'];
                 card.style.display = employeeName.includes(searchTerm) ? '' : 'none';
             });
         });
+        function updateTotalSalary(removedSalary) {
+            const totalSalaryElement = document.querySelector('.alert-info strong');
+            if (totalSalaryElement) {
+                // Remove 'Bs. ' and convert to number
+                let currentTotal = parseFloat(totalSalaryElement.textContent.replace('Total de Salarios a Pagar: Bs. ', '').replace(/,/g, ''));
+                
+                // Subtract the removed salary
+                let newTotal = currentTotal - removedSalary;
+                
+                // Update the display
+                totalSalaryElement.textContent = `Total de Salarios a Pagar: Bs. ${newTotal.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            }
+        }
     </script>
 </body>
 </html>

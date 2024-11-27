@@ -13,7 +13,7 @@ $cliente_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 // Obtener reservas eliminadas del cliente
 $sql = "SELECT r.*, c.nombre, c.apellidos 
         FROM reservas r 
-        INNER JOIN clientes c ON r.user_id = c.id 
+        INNER JOIN clientes c ON r.cliente_id = c.id 
         WHERE c.id = ? AND r.eliminado = 1";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $cliente_id);

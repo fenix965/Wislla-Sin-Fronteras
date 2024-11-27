@@ -32,7 +32,7 @@ if (!$result_proveedores) {
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar">
+    <aside class="sidebar">
             <div class="logo">
                 <a class="navbar-brand" href="#">
                     <img src="../imagenes/WisllaLogo.jpg" alt="Logo de Wislla">
@@ -49,7 +49,8 @@ if (!$result_proveedores) {
                 </ul>
             </nav>
             <div class="user-section">
-                <span>Administrador: <?= htmlspecialchars($nombre_admin); ?></span>
+                <span><i class="fas fa-user-shield"></i> <?= htmlspecialchars($nombre_admin); ?></span>
+                <br><br>
                 <a href="../registro/logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Cerrar sesión
                 </a>
@@ -60,12 +61,6 @@ if (!$result_proveedores) {
             <header class="content-header">
                 <h2><i class="fas fa-truck"></i> Gestión de Proveedores</h2>
             </header>
-
-            <div class="actions-bar">
-                <button class="btn btn-primary" onclick="window.location.href='agregar_proveedor.php'">
-                    <i class="fas fa-plus"></i> Nuevo Proveedor
-                </button>
-            </div>
 
             <section class="providers-section">
                 <div class="table-responsive">
@@ -92,12 +87,7 @@ if (!$result_proveedores) {
                                     <button class="btn btn-info btn-sm" onclick="mostrarMensaje()">
                                         <i class="fas fa-phone"></i> Contactar
                                     </button>
-                                    <button class="btn btn-warning btn-sm" onclick="window.location.href='editar_proveedor.php?id=<?= $row['id']; ?>'">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminar(<?= $row['id']; ?>)">
-                                        <i class="fas fa-trash"></i> Eliminar
-                                    </button>
+                                   
                                 </td>
                             </tr>
                             <?php endwhile; ?>

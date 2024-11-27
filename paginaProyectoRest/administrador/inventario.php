@@ -150,9 +150,10 @@ if (!$result_ingredientes) {
                             <i class="fas fa-plus"></i> Agregar Ingrediente
                         </button>
                         <!-- Botón para ver ingredientes eliminados -->
-                        <a href="ingredientes_eliminados.php" class="btn btn-secondary mt-2">
-                            <i class="fas fa-trash"></i> Ver Ingredientes Eliminados
-                        </a>
+                        <a href="ingredientes_eliminados.php" class="btn btn-secondary mt-2" style="color: white;">
+    <i class="fas fa-trash"></i> Ver Ingredientes Eliminados
+</a>
+
                     </div>
                 </div>
             </section>
@@ -186,10 +187,10 @@ if (!$result_ingredientes) {
                                     <td><?= htmlspecialchars($row['unidad_medida']); ?></td>
                                     <td class="amount-column">Bs <?= number_format($row['precio_unitario'], 2); ?></td>
                                     <td>
-                                        <a href="editar_ingrediente.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
+                                        <a href="editar_ingrediente.php?id=<?= $row['id']; ?>" style="color: white;" class="btn btn-primary btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="eliminar_ingrediente.php?id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">
+                                        <a href="eliminar_ingrediente.php?id=<?= $row['id']; ?>" style="color: white;"  class="btn btn-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
