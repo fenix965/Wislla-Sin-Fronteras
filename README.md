@@ -37,8 +37,8 @@ Este sistema permite optimizar las operaciones diarias y mejorar el flujo de tra
 |------------------------------------|----------------------------------|
 | Marces Pizza Mauricio Andres      | Coach                           |
 | Mamani Huacoto Alexandra Yulye    | Analista de Calidad de Software |
-| Balderrama Delgado Maciel         | FrontEnd                        |
-| Alfaro Delgado Horacio            | Backend                         |
+| Balderrama Delgado Maciel         | BackEnd                        |
+| Alfaro Delgado Horacio            | Frontend                         |
 
 --
 
